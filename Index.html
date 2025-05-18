@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Key System</title>
+  <style>
+    body { font-family: Arial, sans-serif; text-align: center; padding-top: 50px; }
+    input { padding: 10px; width: 250px; }
+    button { padding: 10px 20px; }
+    #result { margin-top: 20px; font-weight: bold; }
+  </style>
+</head>
+<body>
+  <h2>Enter Your Key</h2>
+  <input type="text" id="keyInput" placeholder="Enter key (e.g. Driftywn-XXXXXX)">
+  <br><br>
+  <button onclick="validateKey()">Validate</button>
+  <div id="result"></div>
+
+  <script>
+    // List of valid keys and their generation time
+    const keyData = {
+      "Driftywn-A73F9C": Date.now(), // now
+      "Driftywn-X92L5B": Date.now() - 3600000, // 1 hour ago
+      "Driftywn-K1T4ZM": Date.now() - 90000000, // 25 hours ago (expired)
+      // Add more keys as needed
+    };
+
+    function validateKey() {
+      const input = document.getElementById("keyInput").value.trim();
+      const resultBox = document.getElementById("result");
+
+      if (!keyData[input]) {
+        resultBox.textContent = "Invalid key.";
+        resultBox.style.color = "red";
+        return;
+      }
+
+      const createdAt = keyData[input];
+      const now = Date.now();
+      const diff = now - createdAt;
+
+      if (diff > 24 * 60 * 60 * 1000) {
+        resultBox.textContent = "Key expired.";
+        resultBox.style.color = "orange";
+      } else {
+        resultBox.textContent = "Key is valid!";
+        resultBox.style.color = "green";
+
+        // You can redirect here to your script hub
+        // window.location.href = "your-script-hub-url.html";
+      }
+    }
+  </script>
+</body>
+</html>
